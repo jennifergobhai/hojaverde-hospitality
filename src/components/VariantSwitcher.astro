@@ -1,5 +1,6 @@
 ---
 import { themes } from '../data/themes';
+import { url } from '../lib/url';
 
 interface Props {
   current: number;
@@ -13,12 +14,12 @@ const theme = themes.find((t) => t.id === current)!;
   <span class="label">{theme.id}. {theme.name}</span>
   {
     themes.map((t) => (
-      <a href={`/layouts/${t.id}`} aria-current={t.id === current ? 'page' : undefined}>
+      <a href={url(`/layouts/${t.id}`)} aria-current={t.id === current ? 'page' : undefined}>
         {t.id}
       </a>
     ))
   }
-  <a href="/original" class="orig">Original</a>
+  <a href={url('/original')} class="orig">Original</a>
 </nav>
 
 <style>

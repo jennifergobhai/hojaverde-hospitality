@@ -6,6 +6,7 @@ import '@fontsource-variable/bodoni-moda/opsz.css';
 import '@fontsource-variable/bodoni-moda/opsz-italic.css';
 import '../styles/lux.css';
 import { site } from '../data/site';
+import { url } from '../lib/url';
 
 interface Props {
   title?: string;
@@ -24,7 +25,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={url('/favicon.png')} />
+    {import.meta.env.PUBLIC_NOINDEX && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#3a150b" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
