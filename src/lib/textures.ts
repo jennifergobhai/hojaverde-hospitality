@@ -75,17 +75,3 @@ export function talavera(size = 64) {
   <circle cx="32" cy="32" r="2" fill="#c9491f"/>
 </svg>`);
 }
-
-/** Very subtle stone: soft mottling plus fine mineral grain, both light and dark flecks. Overlay on a solid color. */
-export const stone = uri(`
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480">
-  <filter id="mot" x="0" y="0" width="100%" height="100%"><feTurbulence stitchTiles="stitch" type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="21"/>
-    <feColorMatrix values="0 0 0 0 1  0 0 0 0 0.86  0 0 0 0 0.72  0 0 0 0.22 -0.06"/></filter>
-  <filter id="drk" x="0" y="0" width="100%" height="100%"><feTurbulence stitchTiles="stitch" type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="5"/>
-    <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 -0.12"/></filter>
-  <filter id="grn" x="0" y="0" width="100%" height="100%"><feTurbulence stitchTiles="stitch" type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="13"/>
-    <feColorMatrix values="0 0 0 0 1  0 0 0 0 0.9  0 0 0 0 0.8  0 0 0 0.34 -0.18"/></filter>
-  <rect width="100%" height="100%" filter="url(#mot)"/>
-  <rect width="100%" height="100%" filter="url(#drk)"/>
-  <rect width="100%" height="100%" filter="url(#grn)"/>
-</svg>`);

@@ -1,5 +1,7 @@
 ---
-import { stone } from '../../lib/textures';
+import { stoneBg } from '../../lib/stone';
+
+const stone = await stoneBg();
 
 const links = [
   { href: '#table', label: 'The Table' },
@@ -25,9 +27,9 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 20;
-    /* Warm red-brown from the bottle in the hero photo, with a faint stone texture. */
+    /* Same dark stone as the spirits section. --bar is the fallback and hover-text color. */
     --bar: #34130a;
-    background: var(--stone) 0 0 / 480px 480px, var(--bar);
+    background: var(--stone) center / cover, var(--bar);
     color: var(--cream);
     border-bottom: 1px solid rgba(255, 245, 226, 0.1);
   }

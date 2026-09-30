@@ -1,88 +1,96 @@
 ---
-import { woodBg } from '../../lib/wood';
+import { stoneBg } from '../../lib/stone';
 
-const wood = await woodBg();
+const stone = await stoneBg();
 
 const spirits = ['Tequila', 'Mezcal', 'Bacanora', 'Raicilla', 'Sotol', 'Destilado de agave', 'Mexican rum', 'Whiskey', 'Gin', 'Amaros'];
 ---
 
-<section id="table" class="table" style={`--wood: ${wood};`}>
-  <div class="wrap grid">
-    <div data-reveal>
-      <p class="eyebrow">Chapter one · The table</p>
-      <h2>Around<br />the table</h2>
-    </div>
+<section id="table" class="table" aria-label="The spirits" style={`--stone: ${stone};`}>
+  <div class="wrap inner">
+    <ul class="spirits" aria-label="Spirits we pour" data-reveal>
+      {spirits.map((s) => <li>{s}</li>)}
+    </ul>
+    <span class="rule" aria-hidden="true"></span>
     <p class="body" data-reveal>
       Journey through Mexico’s rich and dynamic world of spirits — tequila, mezcal, bacanora, raicilla, sotol, destilado
       de agave, along with Mexican rum, whiskey, gin, and amaros. Each bottle tells a story of craft, culture, and terroir
       — a reflection of the land and the hands that shape it.
     </p>
   </div>
-
-  <ul class="spirits wrap" aria-label="Spirits we pour" data-reveal>
-    {spirits.map((s) => <li>{s}</li>)}
-  </ul>
 </section>
+
+<script>
+  // Hide the diamond after any name that ends a wrapped line.
+  const list = document.querySelector<HTMLElement>('#table .spirits');
+  if (list) {
+    const mark = () => {
+      const items = [...list.children] as HTMLElement[];
+      items.forEach((li, i) => {
+        const next = items[i + 1];
+        li.classList.toggle('eol', !!next && next.offsetTop > li.offsetTop);
+      });
+    };
+    new ResizeObserver(mark).observe(list);
+    document.fonts?.ready.then(mark);
+  }
+</script>
 
 <style>
   .table {
     position: relative;
-    padding: clamp(80px, 11vw, 150px) 0 clamp(64px, 9vw, 110px);
+    padding: clamp(72px, 10vw, 130px) 0;
     color: var(--cream);
-    background: linear-gradient(180deg, rgba(48, 22, 10, 0.72), rgba(36, 16, 7, 0.8)),
-      var(--wood) center / cover, #3a1d0e;
+    background: linear-gradient(180deg, rgba(20, 10, 5, 0.2), rgba(20, 10, 5, 0.35)), var(--stone) center / cover, #2a1810;
   }
-  .grid {
+  .inner {
     display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: clamp(32px, 6vw, 96px);
-    align-items: end;
-  }
-  .eyebrow {
-    color: var(--clay);
-  }
-  h2 {
-    margin-top: 22px;
-    font-size: clamp(3rem, 6.4vw, 5.5rem);
-  }
-  .body {
-    margin: 0;
-    max-width: 34em;
-    color: rgba(255, 245, 226, 0.9);
-    font-size: 1.125rem;
-    line-height: 1.8;
+    justify-items: center;
+    text-align: center;
   }
   .spirits {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px 0;
-    margin-top: clamp(56px, 8vw, 96px);
-    padding: 28px 0 0;
-    border-top: 1px solid rgba(255, 245, 226, 0.25);
+    gap: 8px 0;
+    max-width: 1000px;
+    margin: 0;
+    padding: 0;
     list-style: none;
   }
   .spirits li {
     font-family: var(--display);
-    font-style: italic;
-    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-    font-variation-settings: 'opsz' 48;
+    font-size: clamp(1.1rem, 1.92vw, 1.6rem);
+    font-variation-settings: 'opsz' 12;
     white-space: nowrap;
   }
   .spirits li:not(:last-child)::after {
     content: '';
     display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin: 0 20px;
+    width: 6px;
+    height: 6px;
+    margin: 0 16px;
     vertical-align: middle;
     background: var(--clay);
     transform: rotate(45deg) translateY(-2px);
   }
+  .spirits li.eol::after {
+    display: none;
+  }
+  .rule {
+    width: 64px;
+    height: 1px;
+    margin: clamp(32px, 4vw, 44px) 0;
+    background: rgba(255, 245, 226, 0.35);
+  }
+  .body {
+    max-width: 40em;
+    margin: 0;
+    color: rgba(255, 245, 226, 0.88);
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
   @media (max-width: 800px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
     .spirits li:not(:last-child)::after {
       margin: 0 12px;
     }
