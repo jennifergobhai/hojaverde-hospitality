@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import bg from '../assets/gradient-warm.jpg';
+import { offerings } from '../data/site';
+---
+
+<section class="offerings" aria-labelledby="offerings-title">
+  <Image src={bg} alt="" class="bg" widths={[800, 1600, 2048]} sizes="100vw" />
+  <h2 id="offerings-title" class="sr-only">Tasting experiences</h2>
+  <ul class="list">
+    {
+      offerings.map((o) => (
+        <li>
+          <h3>{o.title}</h3>
+          <p>{o.body}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .offerings {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(72px, 10vw, 100px) clamp(16px, 5vw, 64px);
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .list {
+    position: relative;
+    display: grid;
+    gap: clamp(56px, 9vw, 88px);
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+  h3 {
+    margin: 0 0 4px;
+    color: var(--cream);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  p {
+    margin: 0;
+    color: var(--sand);
+    font-size: 1rem;
+  }
+</style>

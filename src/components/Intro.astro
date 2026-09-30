@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import bowl from '../assets/tasting-bowl.jpg';
+---
+
+<section class="intro">
+  <Image src={bowl} alt="A small clay copita, the traditional cup for sipping mezcal" class="photo" widths={[600]} sizes="(max-width: 760px) 100vw, 50vw" />
+  <div class="text">
+    <p>
+      Journey through Mexico’s rich and dynamic world of spirits - tequila, mezcal, bacanora, raicilla, sotol, destilado
+      de agave, along with Mexican rum, whiskey, gin, and amaros. Each bottle tells a story of craft, culture, and terroir
+      - a reflection of the land and the hands that shape it. Learn how to “kiss the spirit” - a mindful approach to
+      tasting that awakens the senses and reveals the layers of aroma, texture, and complexity within every sip.
+    </p>
+  </div>
+</section>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 330px;
+    background: var(--charcoal);
+  }
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text {
+    display: flex;
+    align-items: center;
+    padding: 40px clamp(16px, 6vw, 58px);
+    color: var(--sand);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  .text p {
+    margin: 0;
+    max-width: 38ch;
+  }
+  @media (max-width: 760px) {
+    .intro {
+      grid-template-columns: 1fr;
+    }
+    .photo {
+      aspect-ratio: 5 / 4;
+    }
+  }
+</style>

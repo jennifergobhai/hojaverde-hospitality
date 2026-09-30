@@ -1,0 +1,106 @@
+---
+import { evening } from '../../data/site';
+import { plaster } from '../../lib/textures';
+---
+
+<section id="evening" class="evening" style={`--plaster-tex: ${plaster};`}>
+  <div class="wrap">
+    <header class="head" data-reveal>
+      <p class="eyebrow">Chapter four · The evening</p>
+      <h2>From first pour<br />to last toast</h2>
+    </header>
+
+    <ol class="arc">
+      {
+        evening.map((s, i) => (
+          <li data-reveal style={`transition-delay: ${(i % 3) * 110}ms`}>
+            <span class="dot" aria-hidden="true" />
+            <p class="when">{s.when}</p>
+            <h3>{s.title}</h3>
+            <p class="body">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .evening {
+    padding: clamp(88px, 11vw, 150px) 0;
+    background: var(--plaster-tex), var(--plaster);
+    background-size: 600px 600px, auto;
+  }
+  .head {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+  .eyebrow {
+    color: var(--terracotta);
+  }
+  h2 {
+    margin-top: 20px;
+    font-size: clamp(2.75rem, 6vw, 4.75rem);
+  }
+  .arc {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 64px clamp(24px, 4vw, 56px);
+    margin: clamp(64px, 8vw, 96px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    position: relative;
+    padding-top: 34px;
+    border-top: 1px solid rgba(42, 29, 21, 0.2);
+  }
+  .dot {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    background: var(--terracotta);
+    transform: rotate(45deg);
+  }
+  .when {
+    margin: 0;
+    color: var(--terracotta);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  h3 {
+    margin-top: 12px;
+    font-size: clamp(1.625rem, 2.4vw, 2rem);
+    line-height: 1.1;
+  }
+  .body {
+    margin: 12px 0 0;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 900px) {
+    .arc {
+      grid-template-columns: 1fr;
+      gap: 0;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+    li {
+      padding: 0 0 44px 36px;
+      border-top: 0;
+      border-left: 1px solid rgba(42, 29, 21, 0.2);
+    }
+    li:last-child {
+      padding-bottom: 0;
+      border-left-color: transparent;
+    }
+    .dot {
+      top: 4px;
+      left: -6px;
+    }
+  }
+</style>

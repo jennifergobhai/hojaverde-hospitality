@@ -1,0 +1,64 @@
+---
+// EXPLORATION: the logo's leaf-and-copita mark with the wordmark live-set in the headline serif.
+// Used in the homepage hero; the original logo file is still used in the footer.
+import { getImage } from 'astro:assets';
+import mark from '../../assets/logo-mark-white.png';
+import { site } from '../../data/site';
+
+// The mark is used as a mask so it can take any color (see --mark-color).
+const markImg = await getImage({ src: mark, width: 400, format: 'png' });
+---
+
+<div class="lockup" role="img" aria-label={site.name}>
+  <div class="word" aria-hidden="true">
+    <span class="hv">Hoja<br />Verde</span>
+    <span class="hosp">Hospitality</span>
+  </div>
+  <span class="mark" aria-hidden="true" style={`--mark: url("${markImg.src}")`}></span>
+</div>
+
+<style>
+  .lockup {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    column-gap: 0.7em;
+    /* Bottom of the bowl sits on the bottom of HOSPITALITY. */
+    align-items: end;
+    font-size: var(--logo-size, 30px);
+  }
+  .word {
+    display: grid;
+    justify-items: end;
+  }
+  .hv {
+    font-family: var(--display);
+    font-size: 1.95em;
+    font-weight: 400;
+    /* Lower optical size = sturdier hairlines (crossbars, thin diagonals) than the display cut. */
+    font-variation-settings: 'opsz' var(--logo-opsz, 12);
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    text-align: right;
+    text-transform: uppercase;
+  }
+  .hosp {
+    margin-top: 0.45em;
+    margin-right: 0.08em;
+    font-family: var(--sans);
+    font-size: 0.66em;
+    font-weight: 300;
+    line-height: 1;
+    /* Drop the font's descender space so the box bottom is the letters' baseline. */
+    margin-bottom: -0.275em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .mark {
+    display: block;
+    height: 6em;
+    aspect-ratio: 446 / 706;
+    background: var(--mark-color, currentColor);
+    -webkit-mask: var(--mark) center / contain no-repeat;
+    mask: var(--mark) center / contain no-repeat;
+  }
+</style>

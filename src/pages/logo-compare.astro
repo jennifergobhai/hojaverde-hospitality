@@ -1,0 +1,83 @@
+---
+// Side-by-side comparison of logo options on the hero photo. Not linked from the site.
+import { Image, getImage } from 'astro:assets';
+import Lux from '../layouts/Lux.astro';
+import LogoType from '../components/lux/LogoType.astro';
+import logo from '../assets/logo-white.png';
+import photo from '../assets/hero-pour.webp';
+
+const bg = await getImage({ src: photo, width: 1200, format: 'webp' });
+const options = [
+  { label: 'Original logo', opsz: null },
+  { label: 'Bodoni · display (opsz 96)', opsz: 96 },
+  { label: 'Bodoni · opsz 28', opsz: 28 },
+  { label: 'Bodoni · opsz 12', opsz: 12 },
+  { label: 'Bodoni · opsz 6 (heaviest)', opsz: 6 },
+];
+---
+
+<Lux title="Logo comparison | Hoja Verde Hospitality">
+  <meta name="robots" content="noindex" slot="head" />
+  <main class="compare" style={`--bg: url("${bg.src}")`}>
+    <h1>Logo comparison</h1>
+    <p class="note">Lower “opsz” numbers give Bodoni’s thin strokes (H and A crossbars, right side of V) more weight.</p>
+    <ul>
+      {
+        options.map((o) => (
+          <li>
+            <div class="tile">
+              {o.opsz === null ? (
+                <Image src={logo} alt="Hoja Verde Hospitality" widths={[300, 600]} sizes="300px" class="img" />
+              ) : (
+                <div style={`--logo-opsz: ${o.opsz}; --logo-size: 30px;`}>
+                  <LogoType />
+                </div>
+              )}
+            </div>
+            <p class="label">{o.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Lux>
+
+<style>
+  .compare {
+    padding: 32px var(--gutter) 64px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .note {
+    margin: 8px 0 28px;
+    color: var(--ink-soft);
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tile {
+    display: grid;
+    place-items: center;
+    height: 280px;
+    padding: 24px;
+    border-radius: 4px;
+    color: var(--cream);
+    background: linear-gradient(90deg, rgba(20, 14, 9, 0.8), rgba(20, 14, 9, 0.45)), var(--bg) 30% 40% / cover;
+  }
+  .tile :global(.img) {
+    width: 300px;
+  }
+  .label {
+    margin: 10px 0 0;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+</style>

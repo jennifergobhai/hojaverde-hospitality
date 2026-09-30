@@ -1,0 +1,59 @@
+---
+// Line-drawn botanicals in the spirit of the logo's leaf. Stroke uses currentColor.
+interface Props {
+  kind: 'agave' | 'grass' | 'sprig';
+  class?: string;
+}
+const { kind, class: cls } = Astro.props;
+---
+
+{
+  kind === 'agave' && (
+    <svg class={cls} viewBox="0 0 320 300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M160 290 C150 210 120 120 60 40 C110 90 150 160 168 250" />
+      <path d="M162 290 C170 200 196 110 250 20 C216 100 196 170 176 262" />
+      <path d="M156 292 C120 240 70 200 8 186 C70 176 126 210 164 268" />
+      <path d="M166 292 C196 244 250 206 314 198 C256 186 200 214 170 268" />
+      <path d="M158 292 C140 220 128 150 138 70 C150 150 160 220 166 286" />
+      <path d="M164 292 C176 230 200 180 236 140 C214 190 192 240 170 290" />
+      <path d="M160 292 C130 256 96 238 50 236 C100 226 134 244 164 280" />
+      <path d="M120 292 H206" />
+    </svg>
+  )
+}
+{
+  kind === 'grass' && (
+    <svg class={cls} viewBox="0 0 260 320" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <g>
+        {Array.from({ length: 23 }, (_, i) => {
+          const a = ((i - 11) / 11) * 1.05;
+          const len = 210 + ((i * 37) % 60);
+          const x = 130 + Math.sin(a) * len;
+          const y = 310 - Math.cos(a) * len;
+          const cx = 130 + Math.sin(a * 0.55) * len * 0.6;
+          const cy = 310 - Math.cos(a * 0.55) * len * 0.62;
+          return <path d={`M130 310 Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`} />;
+        })}
+        {Array.from({ length: 9 }, (_, i) => {
+          const a = ((i - 4) / 4) * 0.9;
+          const len = 230 + ((i * 29) % 40);
+          const x = 130 + Math.sin(a) * len;
+          const y = 310 - Math.cos(a) * len;
+          return <ellipse cx={x.toFixed(1)} cy={y.toFixed(1)} rx="4" ry="12" transform={`rotate(${((a * 180) / Math.PI).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})`} />;
+        })}
+      </g>
+    </svg>
+  )
+}
+{
+  kind === 'sprig' && (
+    <svg class={cls} viewBox="0 0 200 420" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M100 415 C96 320 104 220 98 10" />
+      {[60, 110, 160, 210, 260, 310, 360].map((y, i) => {
+        const dir = i % 2 ? 1 : -1;
+        const tip = 100 + dir * (62 - i * 3);
+        return <path d={`M100 ${y + 30} C${100 + dir * 10} ${y} ${tip - dir * 10} ${y - 18} ${tip} ${y - 22} C${tip - dir * 4} ${y + 2} ${100 + dir * 18} ${y + 24} 100 ${y + 30} Z`} />;
+      })}
+    </svg>
+  )
+}

@@ -1,0 +1,55 @@
+---
+import Shelf from './Shelf.astro';
+import { plaster, zellige } from '../../lib/textures';
+---
+
+<section id="ritual" class="ritual" style={`--zellige: ${zellige()}; --plaster-tex: ${plaster};`}>
+  <div class="panel" data-reveal>
+    <p class="eyebrow">Chapter two · The ritual</p>
+    <h2>Kiss the spirit</h2>
+    <p class="body">
+      A mindful approach to tasting that awakens the senses and reveals the layers of aroma, texture, and complexity
+      within every sip.
+    </p>
+  </div>
+  <div class="shelf-wrap wrap" data-reveal>
+    <Shelf />
+  </div>
+</section>
+
+<style>
+  .ritual {
+    padding: clamp(80px, 11vw, 140px) 0 clamp(72px, 9vw, 120px);
+    background: linear-gradient(180deg, rgba(2, 40, 35, 0.15), rgba(2, 40, 35, 0) 30%, rgba(2, 40, 35, 0.2)),
+      var(--zellige) 0 0 / 560px 560px, var(--teal);
+  }
+  .panel {
+    width: min(100% - 2 * var(--gutter), 620px);
+    margin-inline: auto;
+    padding: clamp(64px, 8vw, 96px) clamp(28px, 6vw, 72px) clamp(48px, 6vw, 64px);
+    border-radius: 999px 999px 4px 4px;
+    background: var(--plaster-tex), var(--plaster);
+    background-size: 600px 600px, auto;
+    box-shadow: 0 30px 60px -20px rgba(2, 36, 32, 0.6);
+    text-align: center;
+  }
+  .eyebrow {
+    color: var(--teal);
+  }
+  .eyebrow::before {
+    display: none;
+  }
+  h2 {
+    margin-top: 18px;
+    font-size: clamp(2.75rem, 6vw, 4.75rem);
+  }
+  .body {
+    max-width: 28em;
+    margin: 24px auto 0;
+    color: var(--ink-soft);
+    font-size: 1.125rem;
+  }
+  .shelf-wrap {
+    margin-top: clamp(56px, 8vw, 96px);
+  }
+</style>

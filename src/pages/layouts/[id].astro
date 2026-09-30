@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import HeroVariant from '../../components/HeroVariant.astro';
+import Intro from '../../components/Intro.astro';
+import OfferingsVariant from '../../components/OfferingsVariant.astro';
+import Footer from '../../components/Footer.astro';
+import VariantSwitcher from '../../components/VariantSwitcher.astro';
+import { themes } from '../../data/themes';
+
+export function getStaticPaths() {
+  return themes.map((theme) => ({ params: { id: String(theme.id) }, props: { theme } }));
+}
+
+const { theme } = Astro.props;
+---
+
+<Base title={`Layout ${theme.id}: ${theme.name} | Hoja Verde Hospitality`}>
+  <meta name="robots" content="noindex" slot="head" />
+  <Header />
+  <main>
+    <HeroVariant theme={theme} />
+    <Intro />
+    <OfferingsVariant theme={theme} />
+  </main>
+  <Footer />
+  <VariantSwitcher current={theme.id} />
+</Base>

@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-white.png';
+import { site } from '../data/site';
+import type { Theme } from '../data/themes';
+
+interface Props {
+  theme: Theme;
+}
+
+const { theme } = Astro.props;
+---
+
+<section
+  class:list={['hero', theme.layout]}
+  style={`--hero-bg: ${theme.heroBg}; --panel-bg: ${theme.panelBg ?? 'none'}; --accent: ${theme.accent};`}
+>
+  <div class="brand-wrap">
+    <h1 class="brand">
+      <Image src={logo} alt={site.name} widths={[400, 800]} sizes="(max-width: 760px) 70vw, 400px" loading="eager" />
+    </h1>
+  </div>
+  {theme.layout === 'split' && <div class="rule" aria-hidden="true" />}
+  <div class="copy">
+    <p>
+      Each spirit tells a story -<br />
+      of sun and soil,<br />
+      of hands and heart.
+    </p>
+    <p>Guided by {site.host}, this is a journey of connection - between land, maker, and moment.</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--hero-bg);
+    color: var(--accent);
+    font-size: 1.125rem;
+  }
+  .brand {
+    margin: 0;
+  }
+  .brand img {
+    width: 100%;
+  }
+  .copy p {
+    margin: 0;
+  }
+  .copy p + p {
+    margin-top: 1.6em;
+  }
+
+  /* 1 — split: logo | rule | copy */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 360px) 1px minmax(0, 300px);
+    justify-content: center;
+    align-items: center;
+    gap: clamp(32px, 6vw, 64px);
+    min-height: 480px;
+    padding: 64px clamp(16px, 5vw, 64px);
+  }
+  .split .rule {
+    align-self: stretch;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  /* 2 — centered: big logo, poem beneath */
+  .centered {
+    display: grid;
+    justify-items: center;
+    gap: 40px;
+    padding: clamp(72px, 10vw, 120px) clamp(16px, 5vw, 64px);
+    text-align: center;
+  }
+  .centered .brand-wrap {
+    width: min(78vw, 440px);
+  }
+  .centered .copy {
+    max-width: 34ch;
+    font-size: 1.25rem;
+  }
+  .centered .copy p + p {
+    padding-top: 1.6em;
+    border-top: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  /* 3 — panels: logo on one gradient, copy on another */
+  .panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+    background: none;
+  }
+  .panels .brand-wrap {
+    display: grid;
+    place-items: center;
+    padding: 56px clamp(24px, 6vw, 72px);
+    background: var(--hero-bg);
+  }
+  .panels .brand {
+    width: min(100%, 380px);
+  }
+  .panels .copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px clamp(24px, 6vw, 72px);
+    background: var(--panel-bg);
+  }
+
+  @media (max-width: 760px) {
+    .split {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      gap: 28px;
+    }
+    .split .brand-wrap {
+      width: min(70vw, 320px);
+    }
+    .split .rule {
+      width: 64px;
+      height: 1px;
+      align-self: center;
+    }
+    .panels {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .panels .brand-wrap {
+      padding-block: 72px;
+    }
+    .panels .brand {
+      width: min(70vw, 320px);
+    }
+  }
+</style>

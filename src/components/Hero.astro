@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import bg from '../assets/gradient-warm.jpg';
+import logo from '../assets/logo.png';
+import { site } from '../data/site';
+---
+
+<section class="hero">
+  <Image src={bg} alt="" class="bg" widths={[800, 1600, 2048]} sizes="100vw" loading="eager" fetchpriority="high" />
+  <div class="inner">
+    <h1 class="brand">
+      <Image src={logo} alt={site.name} width={740} widths={[370, 740]} sizes="(max-width: 800px) 70vw, 370px" loading="eager" />
+    </h1>
+    <div class="rule" aria-hidden="true"></div>
+    <div class="copy">
+      <p>
+        Each spirit tells a story -<br />
+        of sun and soil,<br />
+        of hands and heart.
+      </p>
+      <p>
+        Guided by {site.host}, this is a journey of connection - between land, maker, and moment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    min-height: 458px;
+    padding: 56px clamp(16px, 5vw, 64px);
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 370px) 1px minmax(0, 300px);
+    align-items: center;
+    gap: clamp(32px, 6vw, 60px);
+  }
+  .brand {
+    margin: 0;
+  }
+  .rule {
+    align-self: stretch;
+    background: var(--gold);
+    opacity: 0.7;
+  }
+  .copy {
+    color: var(--gold);
+    font-size: 1.125rem;
+  }
+  .copy p {
+    margin: 0;
+  }
+  .copy p + p {
+    margin-top: 2em;
+  }
+  @media (max-width: 760px) {
+    .inner {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      gap: 28px;
+    }
+    .brand {
+      width: min(70vw, 320px);
+    }
+    .rule {
+      width: 64px;
+      height: 1px;
+      align-self: center;
+    }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import { offerings } from '../data/site';
+import type { Theme } from '../data/themes';
+
+interface Props {
+  theme: Theme;
+}
+
+const { theme } = Astro.props;
+---
+
+<section
+  class:list={['offerings', `l-${theme.layout}`]}
+  style={`--bg: ${theme.offeringsBg}; --accent: ${theme.accent};`}
+  aria-labelledby="offerings-title"
+>
+  <h2 id="offerings-title" class="sr-only">Tasting experiences</h2>
+  <ul class="list">
+    {
+      offerings.map((o) => (
+        <li>
+          <h3>{o.title}</h3>
+          <p>{o.body}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .offerings {
+    padding: clamp(72px, 10vw, 104px) clamp(16px, 5vw, 64px);
+    background: var(--bg);
+  }
+  .list {
+    display: grid;
+    gap: clamp(48px, 8vw, 80px);
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+  h3 {
+    margin: 0 0 6px;
+    color: #fff;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  p {
+    margin: 0;
+    color: var(--accent);
+    opacity: 0.9;
+  }
+
+  /* Panels layout: three cards side by side */
+  .l-panels .list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1040px;
+  }
+  .l-panels li {
+    padding: 36px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+</style>

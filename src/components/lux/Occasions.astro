@@ -1,0 +1,57 @@
+---
+import { occasions } from '../../data/site';
+---
+
+<section class="occasions" aria-label="Occasions">
+  <p class="eyebrow">For</p>
+  <ul>
+    {occasions.map((o) => <li>{o}</li>)}
+  </ul>
+</section>
+
+<style>
+  .occasions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px 32px;
+    padding: 34px var(--gutter);
+    background: var(--terracotta);
+    color: var(--cream);
+    text-align: center;
+  }
+  .eyebrow::before {
+    display: none;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-variation-settings: 'opsz' 48;
+    white-space: nowrap;
+  }
+  li:not(:last-child)::after {
+    content: '·';
+    margin: 0 18px;
+    font-style: normal;
+    opacity: 0.6;
+  }
+  @media (max-width: 600px) {
+    ul {
+      flex-direction: column;
+    }
+    li::after {
+      display: none;
+    }
+  }
+</style>
