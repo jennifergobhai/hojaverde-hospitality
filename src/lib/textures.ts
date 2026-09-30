@@ -3,12 +3,6 @@
 
 const uri = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg.replace(/\s+/g, ' ').trim())}")`;
 
-function rng(seed: number) {
-  return () => {
-    seed = (seed * 16807) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
-}
 
 /** Fine grain + soft mottling, like hand-troweled lime plaster. Overlay on a cream base. */
 export const plaster = uri(`
@@ -20,41 +14,6 @@ export const plaster = uri(`
   <rect width="100%" height="100%" filter="url(#m)"/>
   <rect width="100%" height="100%" filter="url(#g)"/>
 </svg>`);
-
-/** Hand-glazed zellige: square tiles with varied teal glaze, pooled edges and a sheen. */
-export function zellige(opts: { size?: number; cols?: number; rows?: number; seed?: number; palette?: string[] } = {}) {
-  const { size = 56, cols = 10, rows = 10, seed = 11 } = opts;
-  const palette = opts.palette ?? ['#0a6f63', '#0c7d6f', '#10897a', '#08645b', '#139382', '#0b7568', '#086060', '#12806f', '#0e8a86'];
-  const rand = rng(seed);
-  const gap = 3;
-  let tiles = '';
-  for (let y = 0; y < rows; y++) {
-    for (let x = 0; x < cols; x++) {
-      const c = palette[Math.floor(rand() * palette.length)];
-      const px = x * size + gap / 2 + (rand() - 0.5);
-      const py = y * size + gap / 2 + (rand() - 0.5);
-      const s = size - gap;
-      const hx = (15 + rand() * 70).toFixed(0);
-      const hy = (10 + rand() * 60).toFixed(0);
-      tiles += `<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)})">
-        <rect width="${s}" height="${s}" rx="2.5" fill="${c}"/>
-        <rect width="${s}" height="${s}" rx="2.5" fill="url(#pool)"/>
-        <ellipse cx="${(s * +hx) / 100}" cy="${(s * +hy) / 100}" rx="${s * 0.45}" ry="${s * 0.3}" fill="url(#sheen)"/>
-      </g>`;
-    }
-  }
-  return uri(`
-<svg xmlns="http://www.w3.org/2000/svg" width="${cols * size}" height="${rows * size}">
-  <defs>
-    <radialGradient id="pool" cx="50%" cy="50%" r="70%">
-      <stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#022a25" stop-opacity=".5"/>
-    </radialGradient>
-    <radialGradient id="sheen"><stop offset="0" stop-color="#e8fff6" stop-opacity=".22"/><stop offset="1" stop-color="#e8fff6" stop-opacity="0"/></radialGradient>
-  </defs>
-  <rect width="100%" height="100%" fill="#e9d6b0"/>
-  ${tiles}
-</svg>`);
-}
 
 /** Talavera-style trim tile: indigo quatrefoil with an ochre heart, repeated as a border. */
 export function talavera(size = 64) {

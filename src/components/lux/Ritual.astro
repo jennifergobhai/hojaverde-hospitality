@@ -1,55 +1,89 @@
 ---
-import Shelf from './Shelf.astro';
-import { plaster, zellige } from '../../lib/textures';
+import { Image } from 'astro:assets';
+import photo from '../../assets/ritual-table.webp';
 ---
 
-<section id="ritual" class="ritual" style={`--zellige: ${zellige()}; --plaster-tex: ${plaster};`}>
-  <div class="panel" data-reveal>
-    <p class="eyebrow">Chapter two · The ritual</p>
-    <h2>Kiss the spirit</h2>
-    <p class="body">
-      A mindful approach to tasting that awakens the senses and reveals the layers of aroma, texture, and complexity
-      within every sip.
-    </p>
-  </div>
-  <div class="shelf-wrap wrap" data-reveal>
-    <Shelf />
+<section id="ritual" class="ritual">
+  <Image
+    src={photo}
+    alt="A tasting table from above: glasses of spirits, a board of orange, lime and salt, dried fruit, cheese and a candle"
+    class="photo"
+    widths={[800, 1400, 2000]}
+    sizes="100vw"
+  />
+  <div class="shade" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <div class="copy" data-reveal>
+      <h2>Kiss the spirit</h2>
+      <p class="body">
+        A mindful approach to tasting that awakens the senses and reveals the layers of aroma, texture, and complexity
+        within every sip.
+      </p>
+    </div>
   </div>
 </section>
 
 <style>
   .ritual {
-    padding: clamp(80px, 11vw, 140px) 0 clamp(72px, 9vw, 120px);
-    background: linear-gradient(180deg, rgba(2, 40, 35, 0.15), rgba(2, 40, 35, 0) 30%, rgba(2, 40, 35, 0.2)),
-      var(--zellige) 0 0 / 560px 560px, var(--teal);
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: clamp(460px, 46vw, 760px);
+    padding: clamp(64px, 8vw, 110px) 0;
+    overflow: hidden;
+    background: #1a0e07;
+    color: var(--cream);
   }
-  .panel {
-    width: min(100% - 2 * var(--gutter), 620px);
-    margin-inline: auto;
-    padding: clamp(64px, 8vw, 96px) clamp(28px, 6vw, 72px) clamp(48px, 6vw, 64px);
-    border-radius: 999px 999px 4px 4px;
-    background: var(--plaster-tex), var(--plaster);
-    background-size: 600px 600px, auto;
-    box-shadow: 0 30px 60px -20px rgba(2, 36, 32, 0.6);
-    text-align: center;
+  .ritual :global(.photo) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 40% 50%;
   }
-  .eyebrow {
-    color: var(--teal);
+  /* Deepen the photo's dark right side so the cream text reads cleanly. */
+  .shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(20, 10, 5, 0) 45%, rgba(20, 10, 5, 0.45) 68%, rgba(20, 10, 5, 0.6) 100%);
   }
-  .eyebrow::before {
-    display: none;
+  .inner {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .copy {
+    width: min(100%, 440px);
+    margin-right: clamp(0px, 4vw, 80px);
   }
   h2 {
-    margin-top: 18px;
-    font-size: clamp(2.75rem, 6vw, 4.75rem);
+    font-size: clamp(2.5rem, 5vw, 4.25rem);
+    font-variation-settings: 'opsz' 12;
   }
   .body {
-    max-width: 28em;
-    margin: 24px auto 0;
-    color: var(--ink-soft);
+    margin: 22px 0 0;
+    color: rgba(255, 245, 226, 0.88);
     font-size: 1.125rem;
+    line-height: 1.75;
   }
-  .shelf-wrap {
-    margin-top: clamp(56px, 8vw, 96px);
+
+  @media (max-width: 760px) {
+    .ritual {
+      align-items: end;
+      min-height: 560px;
+    }
+    .ritual :global(.photo) {
+      object-position: 30% 50%;
+    }
+    .shade {
+      background: linear-gradient(0deg, rgba(20, 10, 5, 0.9) 0%, rgba(20, 10, 5, 0.65) 45%, rgba(20, 10, 5, 0.1) 80%);
+    }
+    .inner {
+      justify-content: flex-start;
+    }
+    .copy {
+      margin-right: 0;
+    }
   }
 </style>
